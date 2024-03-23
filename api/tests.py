@@ -1,13 +1,15 @@
 import pytest
 from flask_jwt_extended import create_refresh_token, create_access_token
 from flask import jsonify
-from app import app, db
+from config import TestConfig
+from app import create_app, db
 from app.models import User
 
 
 @pytest.fixture
 def client():
-    app.config["TESTING"] = True
+    app = create_app(TestConfig)
+
     with app.test_client() as client:
         with app.app_context():
             db.create_all()

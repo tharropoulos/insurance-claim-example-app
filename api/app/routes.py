@@ -1,5 +1,5 @@
-from app import app, db, jwt
-from flask import request, jsonify
+from app import db, jwt
+from flask import request, jsonify, Blueprint
 from flask_jwt_extended import (
     create_access_token,
     create_refresh_token,
@@ -9,7 +9,10 @@ from flask_jwt_extended import (
 from app.models import User, load_user
 
 
-@app.route("/api/auth/register", methods=["POST"])
+bp = Blueprint("main", __name__)
+
+
+@bp.route("/api/auth/register", methods=["POST"])
 def register():
     data = request.get_json()
     email = data.get("email")
@@ -45,7 +48,7 @@ def invalid_token_callback(jwt_header, jwt_payload=None):
     return jsonify({"message": "Invalid token"}), 401
 
 
-@app.route("/api/auth/refresh", methods=["POST"])
+@bp.route("/api/auth/refresh", methods=["POST"])
 @jwt_required(refresh=True)
 def refresh():
     current_user = load_user()
@@ -53,7 +56,7 @@ def refresh():
     return jsonify({"access_token": new_token}), 200
 
 
-@app.route("/api/auth/login", methods=["POST"])
+@bp.route("/api/auth/login", methods=["POST"])
 def login():
     data = request.get_json()
     email = data.get("email")
@@ -80,7 +83,7 @@ def login():
     return jsonify({"error": "Login failed"}), 500
 
 
-@app.route("/api/auth/whoami", methods=["GET"])
+@bp.route("/api/auth/whoami", methods=["GET"])
 @jwt_required()
 def whoami():
     user = load_user()

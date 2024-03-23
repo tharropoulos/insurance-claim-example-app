@@ -11,3 +11,8 @@ class Config:
         "DATABASE_URL"
     ) or "sqlite:///" + os.path.join(basedir, "app.db")
     UPLOAD_FOLDER = os.path.join(basedir, "uploads")
+
+
+class TestConfig(Config):
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
