@@ -1,5 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+api/venv
 # dependencies
 /node_modules
 /.pnp
@@ -34,3 +35,25 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 __pycache__
+
+
+api/app.db
+api/insurance.log*
+
+
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+api/lib
+lib64
+__pycache__/
+
