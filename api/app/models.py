@@ -6,10 +6,13 @@ import sqlalchemy as sa
 from flask_jwt_extended import get_jwt_identity
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 class User(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     email: so.Mapped[str] = so.mapped_column(sa.String(120), index=True, unique=True)
     password_hash: so.Mapped[Optional[str]] = so.mapped_column(sa.String(256))
+
+    claims: so.WriteOnlyMapped["Claim"] = so.relationship(back_populates="author")
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -27,6 +30,7 @@ def load_user():
     email = get_jwt_identity()
     user = User.query.filter_by(email=email).first()
     return user
+
 
 class Claim(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
