@@ -1,0 +1,3 @@
+# TODO: Modify this Procfile to fit your needs
+
+web: export PATH=$PATH:/layers/paketo-buildpacks_pip-install/packages/bin && gunicorn insurance:app

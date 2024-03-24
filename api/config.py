@@ -14,11 +14,6 @@ class Config:
     ) or "sqlite:///" + os.path.join(basedir, "app.db")
     print(env)
     print(os.environ.get("DATABASE_URL"))
-    print(SQLALCHEMY_DATABASE_URI)
-    SQLALCHEMY_ENGINE_OPTIONS = {
-        "connect_args": {"check_same_thread": False, "timeout": 30},
-        "echo": True,
-    }
     UPLOAD_FOLDER = os.path.join(basedir, "uploads")
 
 
