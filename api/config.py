@@ -3,7 +3,7 @@ from os.path import dirname as up
 from dotenv import load_dotenv
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-env = os.path.join(up(basedir), ".env")
+env = os.path.join(basedir, ".env")
 load_dotenv(env)
 
 
@@ -12,6 +12,8 @@ class Config:
     SQLALCHEMY_DATABASE_URI = (
         os.environ.get("DATABASE_URL")
     ) or "sqlite:///" + os.path.join(basedir, "app.db")
+    print(env)
+    print(os.environ.get("DATABASE_URL"))
     print(SQLALCHEMY_DATABASE_URI)
     SQLALCHEMY_ENGINE_OPTIONS = {
         "connect_args": {"check_same_thread": False, "timeout": 30},

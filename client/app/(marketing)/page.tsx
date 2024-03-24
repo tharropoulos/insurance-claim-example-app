@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button";
+import { AuthButton } from "@/components/auth-button";
 
 export default async function IndexPage() {
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-10 lg:p-24">
+        <main className="flex min-h-screen flex-col items-center  gap-5 p-10 lg:p-24">
             <section className="md:py-18 flex w-full flex-col items-center  justify-center space-y-2 py-8 text-center md:py-24 lg:py-20">
                 <div className="space-y-2">
                     <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">
@@ -14,7 +14,7 @@ export default async function IndexPage() {
                     </p>
                 </div>
                 <div className="mx-auto w-full max-w-sm space-y-2">
-                    <Button className="text-lg">Join Now</Button>
+                    <AuthButton className="text-lg" />
                 </div>
             </section>
             <section className="md:py-18 w-full py-8 lg:py-20">
