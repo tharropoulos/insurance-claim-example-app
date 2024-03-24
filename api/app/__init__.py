@@ -1,6 +1,7 @@
 from flask import Flask
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 
@@ -11,6 +12,7 @@ jwt = JWTManager()
 
 def create_app(config_class=Config):
     app = Flask(__name__)
+    CORS(app, origins="https://insurance-claim-example-app.vercel.app")
     app.config.from_object(config_class)
 
     db.init_app(app)
