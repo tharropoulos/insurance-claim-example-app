@@ -1,6 +1,11 @@
 import axios from "axios";
 
-const axiosInstance = axios.create({});
+const axiosInstance = axios.create({
+    baseURL:
+        process.env.NODE_ENV === "development"
+            ? "http://127.0.0.1:5328/"
+            : "https://claims-api.fly.dev/",
+});
 
 axiosInstance.interceptors.request.use(
     (config) => {

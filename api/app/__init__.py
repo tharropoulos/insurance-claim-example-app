@@ -12,7 +12,13 @@ jwt = JWTManager()
 
 def create_app(config_class=Config):
     app = Flask(__name__)
-    CORS(app, origins="https://insurance-claim-example-app.vercel.app")
+    CORS(
+        app,
+        origins=[
+            "https://insurance-claim-example-app.vercel.app",
+            "http://localhost:3000",
+        ],
+    )
     app.config.from_object(config_class)
 
     db.init_app(app)
