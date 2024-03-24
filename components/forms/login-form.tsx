@@ -1,7 +1,6 @@
 "use client";
 import * as React from "react";
 import { useForm } from "react-hook-form";
-import { useSearchParams } from "next/navigation";
 import { z } from "zod";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -23,7 +22,6 @@ import { PasswordInput } from "../password-input";
 import { useRouter } from "next/navigation";
 import { AxiosError, AxiosResponse } from "axios";
 import axiosInstance from "@/lib/axios";
-import { Skeleton } from "@/components/ui/skeleton";
 
 type Inputs = z.infer<typeof userAuthSchema>;
 
@@ -49,7 +47,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
     async function onSubmit(data: Inputs) {
         startTransition(async () => {
             try {
-                const response = await axiosInstance
+                await axiosInstance
                     .post<LoginSuccessResponse, AxiosResponse<LoginSuccessResponse>, Inputs>(
                         "api/auth/login",
                         {

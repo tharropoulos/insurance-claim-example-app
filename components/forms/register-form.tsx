@@ -1,14 +1,5 @@
 "use client";
-import * as React from "react";
-import { useForm } from "react-hook-form";
-import { useSearchParams } from "next/navigation";
-import { z } from "zod";
-import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
-import { userAuthSchema } from "@/lib/validations/user";
-import { toast } from "sonner";
-import { Input } from "@/components/ui/input";
-import { UpdateIcon, EnvelopeClosedIcon } from "@radix-ui/react-icons";
+
 import {
     Form,
     FormControl,
@@ -17,14 +8,24 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { Button } from "../ui/button";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { PasswordInput } from "../password-input";
-import { useRouter } from "next/navigation";
-import { AxiosError, AxiosResponse } from "axios";
-import axiosInstance from "@/lib/axios";
-import useAuth from "@/hooks/use-auth";
+import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import useAuth from "@/hooks/use-auth";
+import axiosInstance from "@/lib/axios";
+import { cn } from "@/lib/utils";
+import { userAuthSchema } from "@/lib/validations/user";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { EnvelopeClosedIcon, UpdateIcon } from "@radix-ui/react-icons";
+import { AxiosError, AxiosResponse } from "axios";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import * as React from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
+
+import { PasswordInput } from "../password-input";
+import { Button } from "../ui/button";
 
 type Inputs = z.infer<typeof userAuthSchema>;
 
@@ -51,7 +52,7 @@ export function SignUpForm({ className, ...props }: UserAuthFormProps) {
     async function onSubmit(data: Inputs) {
         startTransition(async () => {
             try {
-                const response = await axiosInstance
+                await axiosInstance
                     .post<RegisterSuccessResponse, AxiosResponse<RegisterSuccessResponse>, Inputs>(
                         "api/auth/register",
                         {
@@ -94,7 +95,7 @@ export function SignUpForm({ className, ...props }: UserAuthFormProps) {
     if (isAuthenticated) {
         return (
             <div className="flex w-full items-center justify-center text-center">
-                <h2 className="text-xl">You're already authenticated</h2>
+                <h2 className="text-xl">You&apos;re already authenticated</h2>
             </div>
         );
     }

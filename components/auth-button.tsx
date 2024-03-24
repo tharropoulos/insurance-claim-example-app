@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { UpdateIcon } from "@radix-ui/react-icons";
 
-const AuthButton: React.FC<ButtonProps> = ({ className, ...props }, ref) => {
+const AuthButton: React.FC<ButtonProps> = ({ className, ...props }) => {
     const [authenticating, isAuthenticated] = useAuth();
     const router = useRouter();
 
