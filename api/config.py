@@ -12,11 +12,15 @@ class Config:
     SQLALCHEMY_DATABASE_URI = (
         os.environ.get("DATABASE_URL")
     ) or "sqlite:///" + os.path.join(basedir, "app.db")
-    print(env)
-    print(os.environ.get("DATABASE_URL"))
     UPLOAD_FOLDER = os.path.join(basedir, "uploads")
+    SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
+    SUPABASE_URL = os.environ.get("SUPABASE_URL")
+    SUPABASE_STORAGE_BUCKET = os.environ.get("SUPABASE_STORAGE_BUCKET")
 
 
 class TestConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
+    SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
+    SUPABASE_URL = os.environ.get("SUPABASE_URL")
+    SUPABASE_STORAGE_BUCKET = os.environ.get("SUPABASE_TEST_STORAGE_BUCKET")
