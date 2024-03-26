@@ -1,17 +1,14 @@
-import { BackLink } from "@/components/back-link";
-import CreateClaimForm from "@/components/forms/create-claim-form";
+import ClaimDetails from "@/components/claim";
 import { Toaster } from "sonner";
+import { BackLink } from "@/components/back-link";
 
-export default async function CreateClaimPage() {
+export default function Page({ params }: { params: { id: number } }) {
     return (
         <main className="relative flex min-h-screen w-full justify-center lg:container ">
             <BackLink href="/claims" />
-            <div className="flex w-[500px] flex-col  p-5 lg:p-10 lg:pt-4">
-                <h1 className="text-4xl font-bold tracking-tighter">Submit a claim</h1>
-                <h5 className="text-lg text-slate-400 dark:text-slate-500">
-                    Please provide some details
-                </h5>
-                <CreateClaimForm />
+            <div className="flex w-1/3  flex-col pt-5 lg:pt-4">
+                <h1 className="text-4xl font-bold tracking-tighter">Claim</h1>
+                <ClaimDetails id={params.id} />
                 <Toaster
                     position="bottom-left"
                     toastOptions={{

@@ -1,17 +1,15 @@
-import { BackLink } from "@/components/back-link";
-import CreateClaimForm from "@/components/forms/create-claim-form";
+import ClaimsTable from "@/components/tables/claim-table";
 import { Toaster } from "sonner";
 
-export default async function CreateClaimPage() {
+export default function ClaimPage() {
     return (
-        <main className="relative flex min-h-screen w-full justify-center lg:container ">
-            <BackLink href="/claims" />
-            <div className="flex w-[500px] flex-col  p-5 lg:p-10 lg:pt-4">
-                <h1 className="text-4xl font-bold tracking-tighter">Submit a claim</h1>
+        <main className="relative flex min-h-screen w-full justify-start lg:container ">
+            <div className="flex w-full flex-col  pt-5 lg:pt-4">
+                <h1 className="text-4xl font-bold tracking-tighter">Claims</h1>
                 <h5 className="text-lg text-slate-400 dark:text-slate-500">
-                    Please provide some details
+                    Here you can manage all your claims
                 </h5>
-                <CreateClaimForm />
+                <ClaimsTable />
                 <Toaster
                     position="bottom-left"
                     toastOptions={{

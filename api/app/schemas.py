@@ -4,6 +4,7 @@ from datetime import datetime
 
 
 class ClaimBase(BaseModel):
+    policy_number: str
     date_of_accident: datetime
     accident_type: str
     description: str

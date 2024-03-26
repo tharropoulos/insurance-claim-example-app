@@ -35,6 +35,7 @@ def load_user():
 class Claim(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id), index=True)
+    policy_number: so.Mapped[str] = so.mapped_column(sa.String(64))
     date_of_accident: so.Mapped[datetime] = so.mapped_column(sa.DateTime)
     accident_type: so.Mapped[str] = so.mapped_column(sa.String(64))
     description: so.Mapped[str] = so.mapped_column(sa.String(256))
@@ -42,7 +43,7 @@ class Claim(db.Model):
     damage_details: so.Mapped[str] = so.mapped_column(sa.String(256))
 
     author: so.Mapped[User] = so.relationship(back_populates="claims")
-    images: so.WriteOnlyMapped["Image"] = so.relationship(back_populates="claim")
+    images: so.Mapped["Image"] = so.relationship(back_populates="claim")
 
     def __repr__(self):
         return "<Claim {}>".format(self.id)
@@ -54,6 +55,7 @@ class Claim(db.Model):
 
         return {
             "id": self.id,
+            "policy_number": self.policy_number,
             "user_id": self.user_id,
             "date_of_accident": self.date_of_accident,
             "accident_type": self.accident_type,
@@ -61,7 +63,9 @@ class Claim(db.Model):
             "injuries_reported": self.injuries_reported,
             "damage_details": self.damage_details,
             "author": self.author.id if self.author else None,
-            "images": [image.id for image in images],
+            "images": [
+                {"id": image.id, "image_file": image.image_file} for image in images
+            ],
         }
 
 

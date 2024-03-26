@@ -11,6 +11,15 @@ const nextConfig = {
             },
         ];
     },
+    images: {
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "onylkugdgcijubigpcml.supabase.co",
+                port: "",
+            },
+        ],
+    },
 };
 
 module.exports = nextConfig;
