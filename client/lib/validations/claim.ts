@@ -28,4 +28,12 @@ const createClaimDTO = createClaimSchema.extend({
     images: z.record(z.instanceof(File)),
 });
 
-export { createClaimSchema, createClaimDTO };
+const getClaimDTO = createClaimSchema.extend({
+    id: z.number(),
+    user_id: z.number(),
+    author: z.number(),
+    images: z.array(z.number()),
+    date_of_accident: z.string(),
+});
+
+export { createClaimSchema, createClaimDTO, getClaimDTO };
