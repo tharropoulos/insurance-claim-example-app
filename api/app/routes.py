@@ -2,6 +2,8 @@ from app import db, jwt, supabase
 from app.helpers import validate_files
 from app.schemas import ClaimCreate
 from flask import request, jsonify, Blueprint, current_app as app, send_from_directory
+from sqlalchemy import desc
+from sqlalchemy.orm import joinedload
 from flask_jwt_extended import (
     create_access_token,
     create_refresh_token,
@@ -123,6 +125,7 @@ def create_claim():
         description=claim.description,
         injuries_reported=claim.injuries_reported,
         damage_details=claim.damage_details,
+        policy_number=claim.policy_number,
     )
 
     db.session.add(claim)
@@ -165,3 +168,34 @@ def create_claim():
     )
 
 
+@bp.route("/api/claims", methods=["GET"])
+@jwt_required()
+def get_claims():
+    user = load_user()
+
+    if user is None:
+        return jsonify({"error": "User not found"}), 404
+
+    page = request.args.get("page", 1, type=int)
+    per_page = request.args.get("per_page", 10, type=int)
+
+    claims = (
+        Claim.query.options(joinedload(Claim.images))
+        .filter_by(user_id=user.id)
+        .order_by(desc(Claim.id))
+        .paginate(page=page, per_page=per_page, error_out=False)
+    )
+
+    claims_items = [claim.to_dict() for claim in claims.items]
+
+    return (
+        jsonify(
+            {
+                "claims": claims_items,
+                "total": claims.total,
+                "pages": claims.pages,
+                "current_page": claims.page,
+            }
+        ),
+        200,
+    )
