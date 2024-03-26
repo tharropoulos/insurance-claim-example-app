@@ -23,11 +23,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon, UpdateIcon } from "@radix-ui/react-icons";
 import { AxiosResponse } from "axios";
 import { format } from "date-fns";
+import { motion } from "framer-motion";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { motion } from "framer-motion";
+
 import { AuthButton } from "../auth-button";
 import { Button } from "../ui/button";
 

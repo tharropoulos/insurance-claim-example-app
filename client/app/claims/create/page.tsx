@@ -1,9 +1,5 @@
 import { BackLink } from "@/components/back-link";
 import CreateClaimForm from "@/components/forms/create-claim-form";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { ChevronLeftIcon } from "@radix-ui/react-icons";
-import Link from "next/link";
 import { Toaster } from "sonner";
 
 export default async function CreateClaimPage() {
