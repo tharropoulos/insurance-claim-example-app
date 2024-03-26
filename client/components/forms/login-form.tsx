@@ -88,7 +88,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
                                 <FormControl>
                                     <Input
                                         id="email"
-                                        placeholder="pol-123456"
+                                        placeholder="johncarmack@example.com"
                                         className="bg-background"
                                         autoCapitalize="none"
                                         autoCorrect="off"
