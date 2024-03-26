@@ -4,10 +4,24 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
+from supabase import create_client, Client
 
 db = SQLAlchemy()
 migrate = Migrate()
 jwt = JWTManager()
+
+
+class SupabaseClient:
+    def __init__(self):
+        self.client = None
+
+    def init_app(self, app):
+        url = app.config.get("SUPABASE_URL")
+        key = app.config.get("SUPABASE_KEY")
+        self.client: Client = create_client(url, key)
+
+
+supabase = SupabaseClient()
 
 
 def create_app(config_class=Config):
@@ -24,8 +38,10 @@ def create_app(config_class=Config):
     db.init_app(app)
     migrate.init_app(app, db)
     jwt.init_app(app)
+    supabase.init_app(app)
 
-    from app import models
+    from app import models, schemas, helpers
+
     from app.routes import bp as main_bp
 
     app.register_blueprint(main_bp)

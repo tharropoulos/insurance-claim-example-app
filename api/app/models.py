@@ -23,7 +23,7 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
-        return "<User {}>".format(self.policy_number)
+        return "<User {}>".format(self.email)
 
 
 def load_user():

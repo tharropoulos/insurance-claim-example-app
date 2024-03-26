@@ -51,4 +51,8 @@ jobs:
 
       - name: Test
         run: python -m pytest tests.py
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          SUPABASE_TEST_STORAGE_BUCKET: ${{ secrets.SUPABASE_TEST_STORAGE_BUCKET }}
         working-directory: ./api
