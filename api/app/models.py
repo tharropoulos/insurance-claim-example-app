@@ -63,7 +63,9 @@ class Claim(db.Model):
             "injuries_reported": self.injuries_reported,
             "damage_details": self.damage_details,
             "author": self.author.id if self.author else None,
-            "images": [image.id for image in images],
+            "images": [
+                {"id": image.id, "image_file": image.image_file} for image in images
+            ],
         }
 
 
