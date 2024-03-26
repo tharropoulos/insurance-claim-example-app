@@ -1,6 +1,7 @@
 from app import db, jwt, supabase
 from app.helpers import validate_files
 from app.schemas import ClaimCreate
+from sqlalchemy import and_
 from flask import request, jsonify, Blueprint, current_app as app, send_from_directory
 from sqlalchemy import desc
 from sqlalchemy.orm import joinedload
@@ -186,6 +187,9 @@ def get_claims():
         .paginate(page=page, per_page=per_page, error_out=False)
     )
 
+    if claims is None:
+        return jsonify({"error": "Claims not found"}), 404
+
     claims_items = [claim.to_dict() for claim in claims.items]
 
     return (
@@ -199,3 +203,28 @@ def get_claims():
         ),
         200,
     )
+
+
+@bp.route("/api/claims/<id>", methods=["GET"])
+@jwt_required()
+def serve_image(id):
+    current_user = load_user()
+
+    claim = (
+        Claim.query.options(joinedload(Claim.images))
+        .filter(and_(Claim.id == id, Claim.user_id == current_user.id))
+        .first()
+    )
+
+    if claim is None:
+        return jsonify({"error": "Claim not found"}), 404
+    claimDict = claim.to_dict()
+
+    images = []
+    for image in claimDict["images"]:
+        res = supabase.client.storage.from_("uploads").get_public_url(
+            image["image_file"]
+        )
+        images.append(res)
+
+    return jsonify({"claim": claim.to_dict(), "images": images}), 200
